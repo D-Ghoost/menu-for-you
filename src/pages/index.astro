@@ -1,13 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-// import Card from '../components/Card.astro';
-import ButtonTypeMenu from '../components/ButtonTypeMenu.jsx';
-import Form from '../components/Form.astro';
 import ResponseMenu from '../components/ResponseMenu.astro';
+import ButtonTypeMenu from '../components/ButtonTypeMenu.jsx';
+import FormGenerativeMenu from '../components/FormGenerativeMenu.jsx';
 
-import { isRoutine } from '../helpers/isRoutine.js';
 
-const $isRoutine = isRoutine;
+
 const listButton = ['Rutina', 'Comida'];
 
 ---
@@ -159,9 +157,8 @@ const listButton = ['Rutina', 'Comida'];
 						))
 					}
 					</ul>
-					<Form 
+					<FormGenerativeMenu
 						client:load
-						isRoutine = { $isRoutine.get() }
 					/>
 				</section>
 			</article>
