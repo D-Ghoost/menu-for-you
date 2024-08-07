@@ -1,17 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ResponseMenu from '../components/ResponseMenu.astro';
-import ButtonTypeMenu from '../components/react/ButtonTypeMenu.jsx';
+import ButtonRoutine from '../components/react/ButtonRoutine.jsx';
+import ButtonFood from '../components/react/ButtonFood.jsx';
 import FormGenerativeMenu from '../components/react/FormGenerativeMenu.jsx';
 import IconPhone from '../components/Icons/IconPhone.astro';
 import IconHeart from '../components/Icons/IconHeart.astro';
 import IconCutlery from '../components/Icons/IconCutlery.astro';
 import IconPlant from '../components/Icons/IconPlant.astro';
 import IconFood from '../components/Icons/IconFood.astro';
-
-
-
-const listButton = ['Rutina', 'Comida'];
+import ResponseGeneratorMenu from '../components/react/ResponseGeneratorMenu';
 
 ---
 
@@ -74,15 +71,12 @@ const listButton = ['Rutina', 'Comida'];
 					<ul
 						class='flex flex-wrap mb-5 justify-center'
 					>
-
-					{
-						listButton.map((name) => (
-							<ButtonTypeMenu 
-								client:load
-								name={ name }
-							/>
-						))
-					}
+						<ButtonRoutine 
+							client:load
+						/>
+						<ButtonFood 
+							client:load
+						/>
 					</ul>
 					<FormGenerativeMenu
 						client:load
@@ -91,8 +85,10 @@ const listButton = ['Rutina', 'Comida'];
 			</article>
 		</section>
 		<hr class='my-20 '>
-		<article class=' flex flex-col justify-center items-center'>
-			<ResponseMenu/>
+		<article class=' flex flex-col justify-center items-center'>	
+				<ResponseGeneratorMenu 
+					client:load
+				/>
 		</article>
 	</main>
 	<footer>
