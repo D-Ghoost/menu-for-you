@@ -1,12 +1,99 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import ButtonRoutine from '../components/react/ButtonRoutine.jsx';
+import ButtonFood from '../components/react/ButtonFood.jsx';
+import FormGenerativeMenu from '../components/react/FormGenerativeMenu.jsx';
+import IconPhone from '../components/Icons/IconPhone.astro';
+import IconHeart from '../components/Icons/IconHeart.astro';
+import IconCutlery from '../components/Icons/IconCutlery.astro';
+import IconPlant from '../components/Icons/IconPlant.astro';
+import IconFood from '../components/Icons/IconFood.astro';
+import ResponseGeneratorMenu from '../components/react/ResponseGeneratorMenu';
+
 ---
 
-<Layout title="Menu a tu medida">
+<Layout title='Menu a tu medida'>
 	<main>
-		<h1>Menú a tu medida</h1>
+		<section
+			id='main-content'
+			class='flex'
+		>
+			<article class='flex flex-col m-7 gap-y-16 h-full'>
+				<section 
+					id='presentation'
+					class='w-3/4 p-10'
+				>
+					<h1 
+						class='text-5xl text-center font-bold'
+					>
+						Menu a tu medida
+					</h1>
+					<p
+						class='text-center py-7 font-medium'
+					>
+						Un aplicativo para ayudarte a llevar una vida más saludable y equilibrada,
+						que se adapta a tus necesidades y gustos.
+					</p>
+					<div class='flex justify-center'>
+						<IconPhone />
+						<IconHeart />
+						<IconCutlery />
+					</div>
+				</section>
+				<section 
+					id='objetivos'
+					class='w-3/4 p-10'
+				>
+					<h1 
+						class='text-5xl text-center font-bold'
+					>
+						Nuestros Objetivos
+					</h1>
+					<p
+						class='text-center py-7 font-medium'
+					>
+						Queremos ayudarte a tener una rutina o comidas saludables,
+						para que puedas mejorar tu calidad de vida.
+					</p>
+					<div 
+						class='flex justify-center mx-7'
+					>
+						<IconPlant />
+						<IconFood />
+					</div>
+				</section>
+			</article>
+			<article class='flex m-7'>
+				<section 
+					id='form-menu'
+					class='p-7 bg-[#2F4350] text-white rounded-3xl'
+				>
+					<ul
+						class='flex flex-wrap mb-5 justify-center'
+					>
+						<ButtonRoutine 
+							client:load
+						/>
+						<ButtonFood 
+							client:load
+						/>
+					</ul>
+					<FormGenerativeMenu
+						client:load
+					/>
+				</section>
+			</article>
+		</section>
+		<hr class='my-20 '>
+		<article class=' flex flex-col justify-center items-center'>	
+				<ResponseGeneratorMenu 
+					client:load
+				/>
+		</article>
 	</main>
+	<footer>
+
+	</footer>
 </Layout>
 <!-- 
 <style>
