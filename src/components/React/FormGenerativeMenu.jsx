@@ -1,9 +1,9 @@
-
+import { useStore } from '@nanostores/react';
 import { useState, useRef } from 'react';
 import { FlavorSelector } from './FlavorSelector.jsx';
 import { SelectOfDiseases } from './SelectOfDiseases.jsx';
 import { useGetDataForm } from '../../helpers/useGetDataForm.js';
-// import generateMenu from '../../helpers/googleIA.js';
+import { informationUser } from '../../helpers/informationUser.js';
 
 
 
@@ -11,12 +11,20 @@ export default function FormGenerativeMenu() {
    
     const formRef = useRef( null );
     const [ haveFoodRestriction, setHaveFoodRestriction ] = useState( false );
+    const [showAlert, setShowAlert] = useState(false);
+    const $informationUser = useStore(informationUser);
 
-    const generateMenu = ( event ) => {
+    const saveUserData = ( event ) => {
         event.preventDefault();
         const formData = new FormData( formRef.current );
         const data = useGetDataForm( formData, haveFoodRestriction );
-        console.log( data );
+        if( data ){
+            informationUser.set( data )
+            console.log( $informationUser )
+            setShowAlert( false );
+        }else{
+            setShowAlert( true );
+        }
     }
 
     return(
@@ -24,6 +32,7 @@ export default function FormGenerativeMenu() {
             <form 
                 ref={ formRef }
                 className='flex flex-col h-full'
+                onSubmit={ saveUserData  }
             >
 
                 <FlavorSelector/>
@@ -61,8 +70,9 @@ export default function FormGenerativeMenu() {
                 <input 
                     id='favoriteFoods'
                     name='favoriteFoods' 
-                    className='mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C] '
+                    className='mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C] invalid:border-rose-500 invalid:text-rose-500 focus:invalid:ring-rose-500 '
                     type='text' 
+                     
                 />
                 <label 
                     htmlFor='notFavoriteFoods'
@@ -73,8 +83,9 @@ export default function FormGenerativeMenu() {
                 <input 
                     id='notFavoriteFoods'
                     name='notFavoriteFoods' 
-                    className='mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C] '
+                    className='mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C] invalid:border-rose-500 invalid:text-rose-500 focus:invalid:ring-rose-500'
                     type='text' 
+                     
                 />
                 <label
                     htmlFor='foodRestriction'
@@ -107,10 +118,11 @@ export default function FormGenerativeMenu() {
                         <input 
                             id='userWeight'
                             name='userWeight' 
-                            className='w-16 mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C]'
+                            className='w-16 mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C] invalid:border-rose-500 invalid:text-rose-500 focus:invalid:ring-rose-500'
                             pattern='\d+(\.\d{1,2})?'
-                            onInvalid={ (ev) => ev.target.setCustomValidity('Por favor, ingresa un número válido y maximo dos decimales') }
+                            onInvalid={ ({ target }) => target.setCustomValidity('Por favor, ingresa un número válido y maximo dos decimales') }
                             type='text'
+                             
                         />
                     </div>
                     <div className='flex flex-col'>
@@ -123,23 +135,22 @@ export default function FormGenerativeMenu() {
                         <input 
                             id='userHeight'
                             name='userHeight' 
-                            className='w-16 mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C]'
+                            className='w-16 mt-2 mb-3 px-2 py-3 rounded-md text-[#3C3C3C] invalid:border-rose-500 invalid:text-rose-500 focus:invalid:ring-rose-500'
                             pattern='\d+(\.\d{1,2})?'
-                            onInvalid={ (ev) => ev.target.setCustomValidity('Por favor, ingresa un número válido y maximo dos decimales') }
+                            onInvalid={ ({ target }) => target.setCustomValidity('Por favor, ingresa un número válido y maximo dos decimales') }
                             type='text'
                         />
                     </div>
                 </section>
-                <div className={ `  w-full px-4 py-4 bg-red-500 rounded-md ` }>
+                <div className={ `${ showAlert ? 'block' : 'hidden' }  w-full px-4 py-4 bg-red-500 rounded-md ` }>
                     <p
                         className='text-white font-bold'
                     >
-                        Datos del formulario incompletos
+                        Favor llenar todos los campos de texto o listado vacios
                     </p>
                 </div>
                 <button 
                     className='m-3 p-2 w-32 justify-center self-center bg-[#628A6F] rounded-md text-white font-bold '
-                    onClick={ generateMenu }
                 >
                     Generar
                 </button>

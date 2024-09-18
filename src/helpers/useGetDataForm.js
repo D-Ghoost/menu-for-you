@@ -1,16 +1,24 @@
 
 export const useGetDataForm = ( formData, haveFoodRestriction = false ) => {
 
+    let data = {};
+
     const generalData = {
         priority: formData.get('priority'),
-        vegetarian: formData.get('vegetarian'),
-        vegan: formData.get('vegan'),
         favoriteFoods: formData.get('favoriteFoods'),
         notFavoriteFoods: formData.get('notFavoriteFoods'),
         userWeight: formData.get('userWeight'),
-        userWeight: formData.get('userWeight'),
         userHeight: formData.get('userHeight')
     };
+
+    
+    for (const key in generalData) {
+        if( !generalData[key] ){
+            return null;
+        }
+    }
+
+
 
     if( haveFoodRestriction ){
         const dataFoodRestriction = {
@@ -19,11 +27,26 @@ export const useGetDataForm = ( formData, haveFoodRestriction = false ) => {
             otherTypeOfDisease: formData.get('otherTypeOfDisease'),
         };
 
-        const data = {...generalData, ...dataFoodRestriction};
+        if( dataFoodRestriction.typeOfDisease === 'otros' &&  !dataFoodRestriction.otherTypeOfDisease ){
+            return null;
+        }
 
+
+        data = {
+            ...generalData, 
+            ...dataFoodRestriction,
+            vegetarian: formData.get('vegetarian'),
+            vegan: formData.get('vegan'),
+        };
         return data
         
     }
 
-    return generalData;
+    data = {
+        ...generalData, 
+        vegetarian: formData.get('vegetarian'),
+        vegan: formData.get('vegan'),
+    };
+
+    return data;
 }
